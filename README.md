@@ -98,19 +98,6 @@ cp .env.example .env
 
 Edit `.env`:
 
-```env
-PORT=5000
-MONGODB_URI=mongodb://127.0.0.1:27017/ai-interview-prep
-JWT_SECRET=change_this_to_a_long_random_secret
-JWT_EXPIRES_IN=7d
-CLIENT_URL=http://localhost:5173
-
-# Optional — leave blank to use the built-in rule-based AI
-AI_API_KEY=
-AI_API_URL=https://api.anthropic.com/v1/messages
-```
-
-Seed the question bank (optional but recommended so the Question Bank page has data):
 
 ```bash
 npm run seed
