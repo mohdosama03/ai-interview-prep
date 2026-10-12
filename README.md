@@ -42,7 +42,7 @@ Built as a portfolio / B.Tech final-year project.
 - **Answer evaluation** — by default uses a deterministic rule-based scorer (answer length,
   keyword relevance to the question, presence of examples) to produce technical accuracy,
   communication, confidence, relevance and overall scores, plus structured feedback.
-- **Optional real LLM** — if you set `AI_API_KEY` and `AI_API_URL` in `backend/.env`, the
+- , the
   service will call a real model (written for the Anthropic Messages API — easy to adapt to
   OpenAI or another provider) and use its JSON response instead. If the call fails for any
   reason, it silently falls back to the rule-based evaluator, so the app never breaks.
@@ -82,60 +82,12 @@ ai-interview-prep/
 
 ---
 
-## Installation & Setup
 
-### Prerequisites
-- Node.js 18+
-- MongoDB running locally, or a free [MongoDB Atlas](https://www.mongodb.com/atlas) cluster
 
-### 1. Backend
 
-```bash
-cd backend
-npm install
-cp .env.example .env
+
 ```
 
-Edit `.env`:
-
-
-```bash
-npm run seed
-```
-
-Start the server:
-
-```bash
-npm run dev      # with nodemon, auto-restarts on changes
-# or
-npm start
-```
-
-The API will be running at `http://localhost:5000`. Check `GET /api/health` to confirm.
-
-### 2. Frontend
-
-In a new terminal:
-
-```bash
-cd frontend
-npm install
-cp .env.example .env
-```
-
-`.env` should contain:
-
-```env
-VITE_API_URL=http://localhost:5000/api
-```
-
-Start the dev server:
-
-```bash
-npm run dev
-```
-
-Open `http://localhost:5173`.
 
 ### 3. Build for production
 
@@ -152,21 +104,9 @@ production database.
 
 ## Environment Variables
 
-### Backend (`backend/.env`)
-| Variable | Description |
-|---|---|
-| `PORT` | Port the Express server runs on (default `5000`) |
-| `MONGODB_URI` | MongoDB connection string |
-| `JWT_SECRET` | Secret used to sign JWTs — use a long random string |
-| `JWT_EXPIRES_IN` | Token lifetime, e.g. `7d` |
-| `CLIENT_URL` | Frontend origin, for CORS |
-| `AI_API_KEY` | *(optional)* API key for a real LLM provider |
-| `AI_API_URL` | *(optional)* Endpoint for a real LLM provider |
 
-### Frontend (`frontend/.env`)
-| Variable | Description |
-|---|---|
-| `VITE_API_URL` | Base URL of the backend API, e.g. `http://localhost:5000/api` |
+
+
 
 ---
 
@@ -213,22 +153,11 @@ All protected routes require `Authorization: Bearer <token>`.
 
 ---
 
-## MongoDB Setup
 
-**Local:** install MongoDB Community Edition and run `mongod`. The default connection
-string `mongodb://127.0.0.1:27017/ai-interview-prep` will just work.
 
-**Atlas (free tier):**
-1. Create a cluster at [mongodb.com/atlas](https://www.mongodb.com/atlas)
-2. Add a database user and allow your IP (or `0.0.0.0/0` for development)
-3. Copy the connection string into `MONGODB_URI` in `backend/.env`
 
-## AI API Setup
 
-No key is required — the app works fully with the built-in rule-based evaluator. To use a
-real LLM instead, set `AI_API_KEY` and `AI_API_URL` in `backend/.env`. The included
-implementation targets Anthropic's Messages API; swap the `fetch` call in
-`services/aiService.js` to target OpenAI or another provider if preferred.
+
 
 ---
 
