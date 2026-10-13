@@ -60,8 +60,7 @@ npm --prefix backend install
 npm --prefix frontend install
 ```
 
-Set `MONGODB_URI`, `JWT_SECRET`, and `GEMINI_API_KEY` in `backend/.env`, then run the
-backend and frontend in separate terminals:
+
 
 ```powershell
 npm --prefix backend run dev
@@ -73,13 +72,9 @@ Run backend feedback tests and build the frontend with:
 ```powershell
 npm --prefix backend test
 npm --prefix frontend run build
-```
 
----
 
 ## Project Structure
-
-```
 ai-interview-prep/
 ├── backend/
 │   ├── config/db.js
