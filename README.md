@@ -47,8 +47,6 @@ Built as a portfolio / B.Tech final-year project.
 - **Safe failure handling** — if Gemini is unavailable, unconfigured, over quota, or returns
   invalid data, the answer is saved without invented scores and can be retried later.
 
-Set `GEMINI_API_KEY` in `backend/.env` to enable AI follow-ups and scored feedback. The key
-stays on the backend and is sent to Google's Generative Language API in a request header.
 
 ### Run and verify
 
