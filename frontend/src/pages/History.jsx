@@ -22,6 +22,7 @@ export default function History() {
   if (loading) return <Loader full />;
 
   const performanceLabel = (score) => {
+    if (!Number.isFinite(score)) return { label: "Not scored", color: "bg-slate-500/10 text-slate-600 dark:text-slate-400" };
     if (score >= 8) return { label: "Excellent", color: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400" };
     if (score >= 6) return { label: "Good", color: "bg-accent-500/10 text-accent-600 dark:text-accent-400" };
     if (score >= 4) return { label: "Fair", color: "bg-amber-500/10 text-amber-600 dark:text-amber-400" };
@@ -46,7 +47,7 @@ export default function History() {
       ) : (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {interviews.map((i) => {
-            const perf = performanceLabel(i.score || 0);
+            const perf = performanceLabel(i.score);
             return (
               <div key={i._id} className="card p-5">
                 <div className="mb-3 flex items-start justify-between">
@@ -64,7 +65,7 @@ export default function History() {
                     <Calendar size={13} /> {new Date(i.createdAt).toLocaleDateString()}
                   </span>
                   <span>{i.questions?.length || 0} questions</span>
-                  <span className="font-semibold text-slate-700 dark:text-slate-200">Score: {i.score}/10</span>
+                  <span className="font-semibold text-slate-700 dark:text-slate-200">Score: {Number.isFinite(i.score) ? `${i.score}/10` : "Not scored"}</span>
                 </div>
 
                 <Link to={`/history/${i._id}`} className="btn-secondary w-full justify-center text-sm">

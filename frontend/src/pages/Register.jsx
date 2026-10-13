@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Sparkles, Mail, Lock, User } from "lucide-react";
+import { Mail, Lock, User } from "lucide-react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useToast } from "../components/Toast.jsx";
+import BrandMark from "../components/BrandMark.jsx";
 
 const ROLES = [
   "Frontend Developer",
@@ -24,7 +25,7 @@ export default function Register() {
     email: "",
     password: "",
     confirmPassword: "",
-    role: ROLES[2],
+    role: "",
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -59,9 +60,7 @@ export default function Register() {
   return (
     <div className="mx-auto flex min-h-[80vh] max-w-md flex-col justify-center px-6 py-16">
       <div className="mb-8 text-center">
-        <span className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-accent-500 to-brandblue-500 text-white">
-          <Sparkles size={22} />
-        </span>
+        <BrandMark className="mx-auto mb-4 h-12 w-12 rounded-2xl" />
         <h1 className="font-display text-2xl font-bold">Create your account</h1>
         <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Start preparing in under a minute.</p>
       </div>
@@ -84,7 +83,7 @@ export default function Register() {
               value={form.name}
               onChange={handleChange}
               className="input-field input-with-icon"
-              placeholder="Arham Khan"
+              placeholder="Name"
             />
           </div>
         </div>
@@ -103,17 +102,6 @@ export default function Register() {
               placeholder="you@example.com"
             />
           </div>
-        </div>
-
-        <div>
-          <label className="mb-1.5 block text-sm font-medium">Target Job Role</label>
-          <select name="role" value={form.role} onChange={handleChange} className="input-field">
-            {ROLES.map((r) => (
-              <option key={r} value={r}>
-                {r}
-              </option>
-            ))}
-          </select>
         </div>
 
         <div className="grid grid-cols-2 gap-3">
@@ -147,6 +135,20 @@ export default function Register() {
               />
             </div>
           </div>
+        </div>
+
+        <div>
+          <label className="mb-1.5 block text-sm font-medium">Target Job Role</label>
+          <select name="role" value={form.role} onChange={handleChange} className="input-field" required>
+            <option value="" disabled>
+              Select your target role
+            </option>
+            {ROLES.map((r) => (
+              <option key={r} value={r}>
+                {r}
+              </option>
+            ))}
+          </select>
         </div>
 
         <button type="submit" disabled={loading} className="btn-primary w-full justify-center">

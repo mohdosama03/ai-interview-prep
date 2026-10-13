@@ -24,8 +24,8 @@ export default function Dashboard() {
 
   if (loading) return <Loader full />;
 
-  const stats = data?.stats || { interviewsCompleted: 0, questionsPracticed: 0, averageScore: 0, currentStreak: 0 };
-  const chart = data?.progressChart || { Technical: 0, HR: 0, Coding: 0, Communication: 0 };
+  const stats = data?.stats || { interviewsCompleted: 0, questionsPracticed: 0, averageScore: null, currentStreak: 0 };
+  const chart = data?.progressChart || { Technical: null, HR: null, Coding: null, Communication: null };
   const recent = data?.recentInterviews || [];
 
   const radarData = Object.entries(chart).map(([category, value]) => ({ category, value }));
@@ -33,7 +33,7 @@ export default function Dashboard() {
   const statCards = [
     { label: "Interviews Completed", value: stats.interviewsCompleted, icon: Trophy, color: "from-accent-500 to-accent-600" },
     { label: "Questions Practiced", value: stats.questionsPracticed, icon: BookOpenCheck, color: "from-brandblue-500 to-blue-600" },
-    { label: "Average Score", value: `${stats.averageScore}/10`, icon: Percent, color: "from-emerald-500 to-emerald-600" },
+    { label: "Average Score", value: Number.isFinite(stats.averageScore) ? `${stats.averageScore}/10` : "—", icon: Percent, color: "from-emerald-500 to-emerald-600" },
     { label: "Current Streak", value: `${stats.currentStreak} days`, icon: Flame, color: "from-amber-500 to-orange-600" },
   ];
 
@@ -66,14 +66,20 @@ export default function Dashboard() {
         {/* Progress chart */}
         <div className="card p-6 lg:col-span-1">
           <h2 className="mb-4 font-display text-lg font-semibold">Preparation Progress</h2>
-          <ResponsiveContainer width="100%" height={260}>
-            <RadarChart data={radarData}>
-              <PolarGrid stroke="currentColor" className="text-slate-200 dark:text-white/10" />
-              <PolarAngleAxis dataKey="category" tick={{ fill: "currentColor", fontSize: 12 }} className="text-slate-500 dark:text-slate-400" />
-              <PolarRadiusAxis angle={30} domain={[0, 10]} tick={false} axisLine={false} />
-              <Radar dataKey="value" stroke="#7c5cff" fill="#7c5cff" fillOpacity={0.4} />
-            </RadarChart>
-          </ResponsiveContainer>
+          {radarData.some((entry) => Number.isFinite(entry.value)) ? (
+            <ResponsiveContainer width="100%" height={260}>
+              <RadarChart data={radarData}>
+                <PolarGrid stroke="currentColor" className="text-slate-200 dark:text-white/10" />
+                <PolarAngleAxis dataKey="category" tick={{ fill: "currentColor", fontSize: 12 }} className="text-slate-500 dark:text-slate-400" />
+                <PolarRadiusAxis angle={30} domain={[0, 10]} tick={false} axisLine={false} />
+                <Radar dataKey="value" stroke="#7c5cff" fill="#7c5cff" fillOpacity={0.4} />
+              </RadarChart>
+            </ResponsiveContainer>
+          ) : (
+            <p className="flex h-[260px] items-center justify-center text-center text-sm text-slate-500 dark:text-slate-400">
+              Verified AI scores will appear here after your answers are evaluated.
+            </p>
+          )}
         </div>
 
         {/* Recent interviews */}
@@ -107,7 +113,7 @@ export default function Dashboard() {
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="badge bg-accent-500/10 text-accent-600 dark:text-accent-400">
-                      Score {i.score}/10
+                      Score {Number.isFinite(i.score) ? `${i.score}/10` : "Not scored"}
                     </span>
                     <Link to={`/history/${i.id}`} className="btn-secondary !px-3 !py-1.5 text-xs">
                       <Eye size={14} /> View

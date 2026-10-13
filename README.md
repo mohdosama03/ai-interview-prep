@@ -34,21 +34,46 @@ Built as a portfolio / B.Tech final-year project.
 
 ## AI Integration
 
-`backend/services/aiService.js` is the single place all "AI" behaviour lives:
+`backend/services/aiService.js` is the single place all interview question and answer-assessment behaviour lives:
 
 - **Question generation** — pulls from a categorized question bank (JavaScript, React,
   Node.js, MongoDB, HR, Behavioral, Coding) filtered by role/type/difficulty. Works with
   **zero configuration and zero cost.**
-- **Answer evaluation** — by default uses a deterministic rule-based scorer (answer length,
-  keyword relevance to the question, presence of examples) to produce technical accuracy,
-  communication, confidence, relevance and overall scores, plus structured feedback.
-- , the
-  service will call a real model (written for the Anthropic Messages API — easy to adapt to
-  OpenAI or another provider) and use its JSON response instead. If the call fails for any
-  reason, it silently falls back to the rule-based evaluator, so the app never breaks.
+- **Follow-up questions** — asks up to two relevant questions when important answer details
+  are missing. Without a Gemini key, a conservative local prompt heuristic is used.
+- **Evidence-based evaluation** — with Gemini configured, returns separate communication,
+  technical, relevance, and supporting-evidence scores with exact answer excerpts and
+  actionable feedback. Responses are schema-checked before scores are saved.
+- **Safe failure handling** — if Gemini is unavailable, unconfigured, over quota, or returns
+  invalid data, the answer is saved without invented scores and can be retried later.
 
-This design means the whole platform is fully functional out of the box for a demo or
-grading, without requiring any paid API key.
+Set `GEMINI_API_KEY` in `backend/.env` to enable AI follow-ups and scored feedback. The key
+stays on the backend and is sent to Google's Generative Language API in a request header.
+
+### Run and verify
+
+In PowerShell, from the project root:
+
+```powershell
+Copy-Item backend/.env.example backend/.env
+npm --prefix backend install
+npm --prefix frontend install
+```
+
+Set `MONGODB_URI`, `JWT_SECRET`, and `GEMINI_API_KEY` in `backend/.env`, then run the
+backend and frontend in separate terminals:
+
+```powershell
+npm --prefix backend run dev
+npm --prefix frontend run dev
+```
+
+Run backend feedback tests and build the frontend with:
+
+```powershell
+npm --prefix backend test
+npm --prefix frontend run build
+```
 
 ---
 

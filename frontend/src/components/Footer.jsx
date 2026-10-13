@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Sparkles } from "lucide-react";
+import BrandMark from "./BrandMark.jsx";
 
 export default function Footer() {
   return (
@@ -9,9 +9,7 @@ export default function Footer() {
         <div className="grid grid-cols-2 gap-8 md:grid-cols-5">
           <div className="col-span-2">
             <div className="flex items-center gap-2 font-display text-lg font-bold">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-accent-500 to-brandblue-500 text-white">
-                <Sparkles size={18} />
-              </span>
+              <BrandMark />
               AI Interview Prep
             </div>
             <p className="mt-3 max-w-xs text-sm text-slate-500 dark:text-slate-400">

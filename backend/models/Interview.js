@@ -5,6 +5,13 @@ const answerSchema = new mongoose.Schema(
     question: { type: String, required: true },
     questionRef: { type: mongoose.Schema.Types.ObjectId, ref: "Question" },
     answerText: { type: String, default: "" },
+    followUps: [
+      {
+        question: { type: String, required: true, maxlength: 500 },
+        answerText: { type: String, required: true, maxlength: 5000 },
+      },
+    ],
+    followUpsSkipped: { type: Boolean, default: false },
     skipped: { type: Boolean, default: false },
     score: { type: Number, default: null },
     feedback: { type: mongoose.Schema.Types.ObjectId, ref: "Feedback" },

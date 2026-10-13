@@ -23,7 +23,7 @@ export default function Progress() {
   useEffect(() => {
     interviewAPI
       .list()
-      .then((res) => setInterviews(res.data.interviews.filter((i) => i.completed).reverse()))
+      .then((res) => setInterviews(res.data.interviews.filter((i) => i.completed && Number.isFinite(i.score)).reverse()))
       .catch(() => toast.error("Could not load progress data"))
       .finally(() => setLoading(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -61,7 +61,7 @@ export default function Progress() {
 
   function avgFor(list, type) {
     const filtered = list.filter((i) => i.interviewType === type);
-    if (!filtered.length) return 0;
+    if (!filtered.length) return null;
     return Math.round((filtered.reduce((sum, i) => sum + (i.score || 0), 0) / filtered.length) * 10);
   }
 
@@ -79,7 +79,7 @@ export default function Progress() {
   }
   if (weakest) insights.push(`Your weakest area is ${weakest.role} at an average of ${weakest.avg}/10.`);
   if (strongest) insights.push(`You're performing strongest in ${strongest.role} at ${strongest.avg}/10.`);
-  if (insights.length === 0) insights.push("Complete a few interviews to start seeing personalized insights here.");
+  if (insights.length === 0) insights.push("Verified AI scores will appear here after interview answers are successfully evaluated.");
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-10">
@@ -92,11 +92,11 @@ export default function Progress() {
         {Object.entries(overall).map(([label, value]) => (
           <div key={label} className="card p-5">
             <div className="text-sm text-slate-500 dark:text-slate-400">{label}</div>
-            <div className="mt-1 font-display text-2xl font-bold">{value}%</div>
+            <div className="mt-1 font-display text-2xl font-bold">{Number.isFinite(value) ? `${value}%` : "—"}</div>
             <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-white/5">
               <div
                 className="h-full rounded-full bg-gradient-to-r from-accent-500 to-brandblue-500"
-                style={{ width: `${value}%` }}
+                style={{ width: `${Number.isFinite(value) ? value : 0}%` }}
               />
             </div>
           </div>

@@ -9,9 +9,10 @@ import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
+router.use(protect);
 router.get("/", getQuestions);
 router.get("/:id", getQuestionById);
-router.post("/", protect, createQuestion);
-router.post("/:id/save", protect, toggleSaveQuestion);
+router.post("/", createQuestion);
+router.post("/:id/save", toggleSaveQuestion);
 
 export default router;

@@ -51,7 +51,9 @@ export const interviewAPI = {
   create: (data) => api.post("/interviews", data),
   list: () => api.get("/interviews"),
   getById: (id) => api.get(`/interviews/${id}`),
+  getFollowUp: (id, data) => api.post(`/interviews/${id}/follow-up`, data),
   submitAnswer: (id, data) => api.post(`/interviews/${id}/answer`, data),
+  retryEvaluation: (id, answerIndex) => api.post(`/interviews/${id}/answers/${answerIndex}/retry`),
   complete: (id) => api.post(`/interviews/${id}/complete`),
 };
 

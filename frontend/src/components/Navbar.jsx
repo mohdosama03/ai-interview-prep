@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { Menu, X, Sun, Moon, Sparkles, LogOut, LayoutDashboard } from "lucide-react";
+import { Menu, X, Sun, Moon, LogOut, LayoutDashboard } from "lucide-react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useTheme } from "../context/ThemeContext.jsx";
+import BrandMark from "./BrandMark.jsx";
 
 const navLinks = [
-  { to: "/", label: "Home" },
-  { to: "/#features", label: "Features" },
   { to: "/questions", label: "Interview Practice" },
   { to: "/dashboard", label: "Dashboard" },
   { to: "/about", label: "About" },
@@ -14,9 +13,29 @@ const navLinks = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const lastScrollY = useRef(0);
   const { user, logout, isAuthenticated } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const scrollDifference = currentScrollY - lastScrollY.current;
+
+      if (currentScrollY <= 80 || open) {
+        setHidden(false);
+      } else if (Math.abs(scrollDifference) > 5) {
+        setHidden(scrollDifference > 0);
+      }
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [open]);
 
   const handleLogout = () => {
     logout();
@@ -24,19 +43,21 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/80 backdrop-blur-lg dark:border-white/5 dark:bg-navy-950/80">
+    <header
+      className={`sticky top-0 z-50 border-b border-slate-200/70 bg-white/80 backdrop-blur-lg transition-transform duration-300 dark:border-white/5 dark:bg-navy-950/80 ${
+        hidden && !open ? "-translate-y-full" : "translate-y-0"
+      }`}
+    >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link to="/" className="flex items-center gap-2 font-display text-lg font-bold">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-accent-500 to-brandblue-500 text-white">
-            <Sparkles size={18} />
-          </span>
+          <BrandMark />
           <span>
             AI Interview <span className="text-accent-500">Prep</span>
           </span>
         </Link>
 
         <div className="hidden items-center gap-8 md:flex">
-          {navLinks.map((link) => (
+          {isAuthenticated && navLinks.map((link) => (
             <NavLink
               key={link.to}
               to={link.to}
@@ -89,7 +110,7 @@ export default function Navbar() {
       {open && (
         <div className="border-t border-slate-200 bg-white px-6 py-4 dark:border-white/5 dark:bg-navy-950 md:hidden">
           <div className="flex flex-col gap-4">
-            {navLinks.map((link) => (
+            {isAuthenticated && navLinks.map((link) => (
               <Link key={link.to} to={link.to} onClick={() => setOpen(false)} className="text-sm font-medium">
                 {link.label}
               </Link>

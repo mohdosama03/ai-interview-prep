@@ -1,13 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Sparkles } from "lucide-react";
+import BrandMark from "../components/BrandMark.jsx";
 
 export default function About() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">
-      <span className="mx-auto mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-accent-500 to-brandblue-500 text-white">
-        <Sparkles size={22} />
-      </span>
+      <BrandMark className="mx-auto mb-6 h-12 w-12 rounded-2xl" />
       <h1 className="font-display text-3xl font-bold">About AI Interview Prep</h1>
       <p className="mt-4 text-slate-600 dark:text-slate-300">
         AI Interview Prep is a practice platform for students and job seekers who want to feel more

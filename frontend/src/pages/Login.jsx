@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Sparkles, Mail, Lock } from "lucide-react";
+import { Mail, Lock } from "lucide-react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useToast } from "../components/Toast.jsx";
+import BrandMark from "../components/BrandMark.jsx";
 
 export default function Login() {
   const { login } = useAuth();
@@ -35,9 +36,7 @@ export default function Login() {
   return (
     <div className="mx-auto flex min-h-[80vh] max-w-md flex-col justify-center px-6 py-16">
       <div className="mb-8 text-center">
-        <span className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-accent-500 to-brandblue-500 text-white">
-          <Sparkles size={22} />
-        </span>
+        <BrandMark className="mx-auto mb-4 h-12 w-12 rounded-2xl" />
         <h1 className="font-display text-2xl font-bold">Welcome back</h1>
         <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Log in to continue your prep.</p>
       </div>

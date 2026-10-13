@@ -45,22 +45,25 @@ export const getDashboardStats = async (req, res, next) => {
     const completed = interviews.filter((i) => i.completed);
     const questionsPracticed = interviews.reduce((sum, i) => sum + (i.answers?.length || 0), 0);
 
+    const scoredCompleted = completed.filter((interview) => Number.isFinite(interview.score));
     const avgScore =
-      completed.length > 0
-        ? Math.round((completed.reduce((sum, i) => sum + (i.score || 0), 0) / completed.length) * 10) / 10
-        : 0;
+      scoredCompleted.length > 0
+        ? Math.round((scoredCompleted.reduce((sum, interview) => sum + interview.score, 0) / scoredCompleted.length) * 10) / 10
+        : null;
 
     const feedbacks = await Feedback.find({ userId });
 
     const categoryTotals = { Technical: [], HR: [], Coding: [], Communication: [] };
-    completed.forEach((i) => {
-      if (i.interviewType === "Technical") categoryTotals.Technical.push(i.score || 0);
-      if (i.interviewType === "HR") categoryTotals.HR.push(i.score || 0);
-      if (i.interviewType === "Coding") categoryTotals.Coding.push(i.score || 0);
+    scoredCompleted.forEach((i) => {
+      if (i.interviewType === "Technical") categoryTotals.Technical.push(i.score);
+      if (i.interviewType === "HR") categoryTotals.HR.push(i.score);
+      if (i.interviewType === "Coding") categoryTotals.Coding.push(i.score);
     });
-    feedbacks.forEach((f) => categoryTotals.Communication.push(f.communicationScore || 0));
+    feedbacks.forEach((f) => {
+      if (Number.isFinite(f.communicationScore)) categoryTotals.Communication.push(f.communicationScore);
+    });
 
-    const avg = (arr) => (arr.length ? Math.round((arr.reduce((a, b) => a + b, 0) / arr.length) * 10) : 0);
+    const avg = (arr) => (arr.length ? Math.round((arr.reduce((a, b) => a + b, 0) / arr.length) * 10) : null);
 
     const progressChart = {
       Technical: avg(categoryTotals.Technical),
