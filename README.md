@@ -26,11 +26,7 @@ Built as a portfolio / B.Tech final-year project.
 - **Profile** — update name, target role, experience level, skills, password
 - **Light / dark mode**, fully responsive (mobile / tablet / desktop)
 
-## Tech Stack
 
-**Frontend:** React 18, React Router, Axios, Tailwind CSS, Recharts, Lucide icons, Vite
-**Backend:** Node.js, Express, JWT auth, bcryptjs, RESTful APIs
-**Database:** MongoDB + Mongoose
 
 ## AI Integration
 
