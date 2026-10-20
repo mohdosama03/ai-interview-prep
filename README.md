@@ -4,29 +4,6 @@ A full-stack (MERN) AI-powered interview preparation platform. Users pick a targ
 practice technical/HR/behavioral/coding interview questions, get AI-generated scoring and
 feedback on every answer, and track their progress over time.
 
-
----
-
-## Features
-
-- **Landing page** — hero, features grid, "how it works", popular roles, CTA
-- **Authentication** — register/login with JWT, bcrypt password hashing, protected routes
-- **Dashboard** — stats (interviews completed, questions practiced, average score, streak),
-  a radar progress chart, recent interviews
-- **Interview Practice** — choose job role, experience level, interview type, difficulty
-- **AI Mock Interview** — live question-by-question flow with a timer, text answers, skip,
-  and instant AI-generated scoring + structured feedback (strengths, improvements, a
-  model answer, and a recommendation)
-- **Question Bank** — searchable, filterable by category/difficulty, bookmarkable
-- **Interview History** — every completed session with a performance label, drill into
-  full question-by-question feedback
-- **Progress Tracking** — score-over-time line chart, average score by role bar chart,
-  and auto-generated AI insights
-- **Profile** — update name, target role, experience level, skills, password
-- **Light / dark mode**, fully responsive (mobile / tablet / desktop)
-
-
-
 ## AI Integration
 
 `backend/services/aiService.js` is the single place all interview question and answer-assessment behaviour lives:
@@ -63,7 +40,6 @@ Run backend feedback tests and build the frontend with:
 ```powershell
 npm --prefix backend test
 npm --prefix frontend run build
-
 
 
 
