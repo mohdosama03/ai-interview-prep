@@ -4,7 +4,6 @@ A full-stack (MERN) AI-powered interview preparation platform. Users pick a targ
 practice technical/HR/behavioral/coding interview questions, get AI-generated scoring and
 feedback on every answer, and track their progress over time.
 
-Built as a portfolio / B.Tech final-year project.
 
 ---
 
@@ -34,7 +33,6 @@ Built as a portfolio / B.Tech final-year project.
 
 - **Question generation** — pulls from a categorized question bank (JavaScript, React,
   Node.js, MongoDB, HR, Behavioral, Coding) filtered by role/type/difficulty. Works with
-  **zero configuration and zero cost.**
 - **Follow-up questions** — asks up to two relevant questions when important answer details
   are missing. Without a Gemini key, a conservative local prompt heuristic is used.
 - **Evidence-based evaluation** — with Gemini configured, returns separate communication,
@@ -48,7 +46,6 @@ Built as a portfolio / B.Tech final-year project.
 
 In PowerShell, from the project root:
 
-```powershell
 Copy-Item backend/.env.example backend/.env
 npm --prefix backend install
 npm --prefix frontend install
@@ -56,7 +53,7 @@ npm --prefix frontend install
 
 
 
-```powershell
+
 npm --prefix backend run dev
 npm --prefix frontend run dev
 ```
@@ -68,30 +65,6 @@ npm --prefix backend test
 npm --prefix frontend run build
 
 
-## Project Structure
-ai-interview-prep/
-├── backend/
-│   ├── config/db.js
-│   ├── controllers/        # authController, userController, interviewController,
-│   │                        # questionController, feedbackController
-│   ├── middleware/         # authMiddleware (JWT), errorMiddleware
-│   ├── models/              # User, Interview, Question, Feedback
-│   ├── routes/               # authRoutes, userRoutes, interviewRoutes,
-│   │                        # questionRoutes, feedbackRoutes
-│   ├── services/aiService.js
-│   ├── seed.js              # populates the question bank
-│   ├── server.js
-│   └── .env.example
-│
-└── frontend/
-    └── src/
-        ├── components/      # Navbar, Footer, Card, Button, ProtectedRoute, Loader, Toast
-        ├── context/         # AuthContext, ThemeContext
-        ├── pages/           # Home, Login, Register, Dashboard, Interview, MockInterview,
-        │                    # Questions, History, Progress, Profile, About, NotFound
-        ├── services/api.js  # Axios instance + all API calls
-        ├── App.jsx
-        └── main.jsx
 
 
 ## Future Improvements

@@ -6,7 +6,7 @@ const signToken = (id) =>
     expiresIn: process.env.JWT_EXPIRES_IN || "7d",
   });
 
-// @route POST /api/auth/register
+
 export const register = async (req, res, next) => {
   try {
     const { name, email, password, confirmPassword, role, experienceLevel } = req.body;
